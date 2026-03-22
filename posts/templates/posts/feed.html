@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Feed | DevHub{% endblock %}
+{% block body_class %}feed-page site-page{% endblock %}
+
+{% block content %}
+<main class="site-shell feed-shell">
+    <section class="feed-hero">
+        <div>
+            <span class="section-label">Feed</span>
+            <h1>O que a comunidade esta construindo hoje</h1>
+            <p>Um espaco mais limpo para acompanhar posts, ideias e atualizacoes sem o visual pesado da versao antiga.</p>
+        </div>
+
+        <div class="hero-actions">
+            <span class="feed-tag">{{ posts|length }} publicacoes</span>
+            <a href="/feed/create" class="btn">Criar post</a>
+        </div>
+    </section>
+
+    <section class="posts-grid">
+        {% for post in posts %}
+        <article class="post">
+            <div class="post-header">
+                <div>
+                    <div class="author">@{{ post.author.username }}</div>
+                    {% if post.author.username == request.user.username %}
+                    <span class="author-tag">Voce</span>
+                    {% endif %}
+                </div>
+                
+                <time class="date">{{ post.created_at }}</time>
+                
+            </div>
+
+            <p class="post-message">{{ post.message }}</p>
+            <a href="/feed/{{ post.id }}" class="post-link">Abrir post</a>
+        </article>
+        {% empty %}
+        <div class="empty-state">
+            Ainda nao existem posts por aqui. Assim que alguem publicar algo, o feed vai aparecer neste espaco.
+        </div>
+        {% endfor %}
+    </section>
+</main>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Criar Post | DevHub{% endblock %}
+{% block body_class %}auth-page site-page{% endblock %}
+
+{% block content %}
+<main class="auth-shell">
+    <section class="auth-panel">
+        <div>
+            <a href="/feed" class="auth-brand">
+                <img src="{% static 'posts/logo2.png' %}" alt="Logo do DevHub">
+                <span>DevHub</span>
+            </a>
+
+            <div class="auth-copy">
+                <span class="section-label">Novo post</span>
+                <h1>Compartilhe uma ideia com a comunidade.</h1>
+                <p>
+                    Escreva algo curto, direto e interessante para aparecer no feed.
+                </p>
+            </div>
+
+            <ul class="auth-points">
+                <li>Fale sobre algo que voce esta estudando ou construindo.</li>
+                <li>Compartilhe progresso, duvidas ou pequenas descobertas.</li>
+                <li>Mantenha a mensagem clara para facilitar a leitura.</li>
+            </ul>
+        </div>
+
+        <p class="auth-footer">Depois de publicar, seu post vai aparecer no feed.</p>
+    </section>
+
+    <section class="auth-card">
+        <span class="section-label">Criacao</span>
+        <h2>Criar post</h2>
+        <p class="auth-intro">Escreva a mensagem que deseja publicar.</p>
+
+        <form method="post" class="form-box">
+            {% csrf_token %}
+
+            <div class="field-group">
+                <label for="message">Mensagem</label>
+                <textarea id="message" name="message" rows="8" placeholder="No que voce esta trabalhando hoje?" required></textarea>
+            </div>
+
+            <button type="submit">Publicar post</button>
+        </form>
+
+        <p class="auth-switch">Quer voltar sem postar? <a href="/feed">Ir para o feed</a></p>
+    </section>
+</main>
+{% endblock %}

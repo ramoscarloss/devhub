@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}Post | DevHub{% endblock %}
+{% block body_class %}feed-page site-page{% endblock %}
+
+{% block content %}
+<main class="site-shell feed-shell">
+    <section class="feed-hero">
+        <div>
+            <span class="section-label">Post</span>
+            <h1>Detalhes da publicacao</h1>
+            <p>Veja o post completo em uma pagina propria, com foco total no conteudo compartilhado.</p>
+        </div>
+
+        <div class="hero-actions">
+            <a href="/feed" class="btn-outline">Voltar ao feed</a>
+        </div>
+    </section>
+
+    <section class="posts-grid">
+        <article class="post">
+            <div class="post-header">
+                <div>
+                    <div class="author">@{{ id_post.author.username }}</div>
+                    {% if id_post.author.username == request.user.username %}
+                    <span class="author-tag">Voce</span>
+                    {% endif %}
+                </div>
+
+                <time class="date">{{ id_post.created_at }}</time>
+            </div>
+
+            <p class="post-message">{{ id_post.message }}</p>
+        </article>
+    </section>
+
+    <section class="comments-section">
+        <div class="comments-header">
+            <span class="section-label">Comentarios</span>
+            <h2 class="comments-title">Conversa da publicacao</h2>
+        </div>
+
+        <div class="comments-grid">
+            {% for comment in comments_post %}
+            <article class="comment-card">
+                <div class="comment-header">
+                    <div>
+                        <div class="author">@{{ comment.author.username }}</div>
+                        {% if comment.author.username == request.user.username %}
+                        <span class="author-tag">Voce</span>
+                        {% endif %}
+                    </div>
+
+                    <time class="date">{{ comment.created_at }}</time>
+                </div>
+
+                <p class="comment-message">{{ comment.message }}</p>
+            </article>
+            {% empty %}
+            <div class="empty-state">
+                Ainda nao existem comentarios por aqui. Seja o primeiro a comentar!
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+</main>
+{% endblock %}

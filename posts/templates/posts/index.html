@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}DevHub{% endblock %}
+{% block body_class %}home-page site-page{% endblock %}
+
+{% block content %}
+<main class="site-shell home-container">
+    <section class="home-hero">
+        <div class="hero-copy">
+            <span class="section-label">Rede social para devs</span>
+            <h1>Seu codigo merece uma <span>comunidade viva</span>.</h1>
+            <p class="subtitle">
+                Conecte-se com desenvolvedores, compartilhe ideias e acompanhe o que a comunidade esta criando sem uma interface com cara de projeto cru.
+            </p>
+
+            <div class="hero-actions">
+                <a href="/login" class="btn">Entrar agora</a>
+                <a href="/register" class="btn-outline">Criar conta</a>
+            </div>
+        </div>
+
+        <div class="hero-visual">
+            <div class="hero-card top">
+                <strong>+120 ideias</strong>
+                <span>Compartilhadas toda semana</span>
+            </div>
+
+            <img src="{% static 'posts/logo2.png' %}" alt="Logo do DevHub" class="hero-logo">
+
+            <div class="hero-card bottom">
+                <strong>Feed rapido</strong>
+                <span>Design limpo para focar no conteudo</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <article class="feature">
+            <span class="feature-badge">01</span>
+            <h3>Compartilhe progresso</h3>
+            <p>Publique ideias, prototipos e aprendizados com um visual que valoriza o texto e deixa a leitura leve.</p>
+        </article>
+
+        <article class="feature">
+            <span class="feature-badge">02</span>
+            <h3>Encontre pessoas certas</h3>
+            <p>Descubra o que outros devs estao construindo e crie conexoes mais rapido com uma home clara e objetiva.</p>
+        </article>
+
+        <article class="feature">
+            <span class="feature-badge">03</span>
+            <h3>Volte sempre</h3>
+            <p>Uma experiencia mais moderna faz a marca parecer mais forte e aumenta a vontade de explorar o feed todos os dias.</p>
+        </article>
+    </section>
+</main>
+{% endblock %}

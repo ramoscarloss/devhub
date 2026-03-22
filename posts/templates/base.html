@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}DevHub{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'posts/style.css' %}">
+</head>
+<body class="{% block body_class %}site-page{% endblock %}">
+    <div class="base-bg"></div>
+
+    <header class="global-nav-wrap">
+        <nav class="site-shell global-navbar">
+            <a href="/" class="global-brand">
+                <img src="{% static 'posts/logo2.png' %}" alt="Logo do DevHub" class="global-logo">
+                <div class="global-brand-copy">
+                    <span class="global-brand-name">DevHub</span>
+                    <span class="global-brand-tag">Comunidade para quem esta construindo</span>
+                </div>
+            </a>
+
+            <div class="global-nav-links">
+                <a href="/" class="global-link">Inicio</a>
+                {% if request.user.is_authenticated %}
+                <a href="/feed/create" class="btn">Criar post</a>
+                <a href="/feed" class="global-link">Feed</a>
+                <a href="/logout" class="logout-btn">Sair</a>
+                <span class="global-brand-tag">Logado como: {{request.user}}</span>
+                {% else %}
+                <a href="/login" class="global-link">Login</a>
+                <a href="/register" class="btn-outline">Criar conta</a>
+                {% endif %}
+                
+            </div>
+        </nav>
+    </header>
+
+    <main class="base-main">
+        {% if messages %}
+        <section class="site-shell global-messages">
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

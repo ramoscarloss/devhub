@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Cadastro | DevHub{% endblock %}
+{% block body_class %}auth-page site-page{% endblock %}
+
+{% block content %}
+<main class="auth-shell">
+    <section class="auth-panel">
+        <div>
+            <a href="/" class="auth-brand">
+                <img src="{% static 'posts/logo2.png' %}" alt="Logo do DevHub">
+                <span>DevHub</span>
+            </a>
+
+            <div class="auth-copy">
+                <span class="section-label">Criar conta</span>
+                <h1>Entre para uma comunidade feita para compartilhar codigo e ideias.</h1>
+                <p>
+                    O novo visual deixa o cadastro mais profissional e mais coerente com a identidade da home e do feed.
+                </p>
+            </div>
+
+            <ul class="auth-points">
+                <li>Publique aprendizados, experimentos e pequenos updates dos seus projetos.</li>
+                <li>Monte sua presenca dentro da plataforma desde o primeiro acesso.</li>
+                <li>Comece com uma experiencia visual mais forte e mais moderna.</li>
+            </ul>
+        </div>
+
+        <p class="auth-footer">Crie sua conta em poucos segundos e entre no ritmo da comunidade.</p>
+    </section>
+
+    <section class="auth-card">
+        <span class="section-label">Cadastro</span>
+        <h2>Abra sua conta</h2>
+        <p class="auth-intro">Preencha os campos abaixo para entrar no DevHub.</p>
+
+        <form action="/register/" method="post" class="form-box">
+            {% csrf_token %}
+
+            <div class="field-group">
+                <label for="username">Username</label>
+                <input id="username" type="text" name="username" placeholder="Escolha um username" required>
+            </div>
+
+            <div class="field-group">
+                <label for="email">Email</label>
+                <input id="email" type="email" name="email" placeholder="voce@email.com" required>
+            </div>
+
+            <div class="field-group">
+                <label for="password">Password</label>
+                <input id="password" type="password" name="password" placeholder="Crie uma senha" required>
+            </div>
+
+            <button type="submit">Criar conta</button>
+        </form>
+
+        <p class="auth-switch">Ja tem conta? <a href="/login">Fazer login</a></p>
+    </section>
+</main>
+{% endblock %}
