@@ -160,6 +160,3 @@ Durante desenvolvimento, o projeto ja esta configurado para servir `media` via `
 3. Ajustar configuracao para producao (`SECRET_KEY`, `DEBUG`, `ALLOWED_HOSTS` via variaveis de ambiente).
 4. Padronizar URLs com barra final.
 
-## Licenca
-
-Defina a licenca que deseja usar (ex.: MIT).
