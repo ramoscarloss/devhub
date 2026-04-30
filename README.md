@@ -160,3 +160,6 @@ Durante desenvolvimento, o projeto ja esta configurado para servir `media` via `
 3. Ajustar configuracao para producao (`SECRET_KEY`, `DEBUG`, `ALLOWED_HOSTS` via variaveis de ambiente).
 4. Padronizar URLs com barra final.
 
+## Preview do projeto
+
+![Preview do projeto](media/print1.png)(media/print2.png)(media/print3.png)
