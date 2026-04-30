@@ -162,6 +162,6 @@ Durante desenvolvimento, o projeto ja esta configurado para servir `media` via `
 
 ## Preview do projeto
 
-![Preview do projeto](project%20media/print1.png)
-![Preview do projeto](project%20media/print2.png)
-![Preview do projeto](project%20media/print3.png)
+![Preview do projeto](project_media/print1.png)
+![Preview do projeto](project_media/print2.png)
+![Preview do projeto](project_media/print3.png)
