@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}Editar Perfil | DevHub{% endblock %}
+{% block body_class %}feed-page site-page{% endblock %}
+
+{% block content %}
+<main class="site-shell feed-shell">
+    <section class="feed-hero">
+        <div>
+            <span class="section-label">Perfil</span>
+            <h1>Editar perfil</h1>
+            <p>Atualize sua bio e foto.</p>
+        </div>
+
+        <div class="hero-actions">
+            <a href="{% url 'view_profile' request.user.username %}" class="btn-outline">Voltar ao perfil</a>
+        </div>
+    </section>
+
+    <section class="profile-editor-layout">
+        <article class="profile-editor-card">
+            <div class="comments-header">
+                <span class="section-label">Edicao</span>
+                <h2 class="comments-title">Perfil</h2>
+            </div>
+
+            <form method="post" enctype="multipart/form-data" class="form-box profile-editor-form">
+                {% csrf_token %}
+
+                <div class="field-group">
+                    <label for="new_bio">Bio</label>
+                    <textarea id="new_bio" name="new_bio" placeholder="Fale sobre voce.">{{ user_perfil.bio }}</textarea>
+                </div>
+
+                <div class="field-group">
+                    <label for="new_pfp">Foto de perfil</label>
+                    <input id="new_pfp" type="file" name="new_pfp" accept="image/*">
+                </div>
+
+                <button type="submit">Salvar alteracoes</button>
+            </form>
+        </article>
+
+        <aside class="profile-editor-preview">
+            <div class="profile-editor-preview-card">
+                <span class="section-label">Preview</span>
+
+                <div class="profile-avatar-wrap">
+                    {% if user_perfil.profile_picture %}
+                    <img src="{{ user_perfil.profile_picture.url }}" alt="Foto atual de {{ request.user.username }}" class="profile-avatar-image">
+                    {% else %}
+                    <div class="profile-avatar">
+                        <span>@{{ request.user.username|first|upper }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="profile-copy">
+                    <h2>@{{ request.user.username }}</h2>
+                    <p class="profile-subtitle">
+                        {% if user_perfil.bio %}
+                        {{ user_perfil.bio }}
+                        {% else %}
+                        Sem bio.
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+
+            <div class="profile-editor-tip">
+                <span class="section-label">Preview</span>
+                <p>Veja como seu perfil aparece.</p>
+            </div>
+        </aside>
+    </section>
+</main>
+{% endblock %}

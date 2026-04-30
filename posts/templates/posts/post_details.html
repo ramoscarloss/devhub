@@ -8,8 +8,8 @@
     <section class="feed-hero">
         <div>
             <span class="section-label">Post</span>
-            <h1>Detalhes da publicacao</h1>
-            <p>Veja o post completo em uma pagina propria, com foco total no conteudo compartilhado.</p>
+            <h1>Post</h1>
+            <p>Detalhes e comentarios.</p>
         </div>
 
         <div class="hero-actions">
@@ -20,8 +20,20 @@
     <section class="posts-grid">
         <article class="post">
             <div class="post-header">
-                <div>
-                    <div class="author">@{{ id_post.author.username }}</div>
+                <div class="post-author-group">
+                    <a class="post-avatar-link" href="{% url 'view_profile' id_post.author.username %}" aria-label="Perfil de {{ id_post.author.username }}">
+                        {% if id_post.author.perfil.profile_picture %}
+                        <img src="{{ id_post.author.perfil.profile_picture.url }}" alt="Foto de perfil de {{ id_post.author.username }}" class="post-avatar-image">
+                        {% else %}
+                        <span class="post-avatar">{{ id_post.author.username|first|upper }}</span>
+                        {% endif %}
+                    </a>
+
+                    <div class="post-author-copy">
+                        <a class="author" href="{% url 'view_profile' id_post.author.username %}">@{{ id_post.author.username }}</a>
+                        <span class="post-meta">Post</span>
+                    </div>
+
                     {% if id_post.author.username == request.user.username %}
                     <span class="author-tag">Voce</span>
                     {% endif %}
@@ -31,36 +43,94 @@
             </div>
 
             <p class="post-message">{{ id_post.message }}</p>
+            <div class="post-actions post-actions-between">
+                <form method="post" action="{% url 'like' id_post.id %}" class="like-form">
+                    {% csrf_token %}
+                    <button
+                        type="submit"
+                        class="like-btn {% if user_liked %}active{% endif %}"
+                        aria-label="{% if user_liked %}Descurtir{% else %}Curtir{% endif %}"
+                        title="{% if user_liked %}Descurtir{% else %}Curtir{% endif %}"
+                    >
+                        <span class="heart-icon" aria-hidden="true">&#10084;</span>
+                    </button>
+                    <span class="like-count">{{ like_count }} curtidas</span>
+                </form>
+
+                {% if id_post.author == request.user %}
+                <form method="post" action="{% url 'delete_post' id_post.id %}" class="post-delete-form" onsubmit="return confirm('Tem certeza que deseja apagar este post?')">
+                    {% csrf_token %}
+                    <button type="submit" class="post-delete-btn">Apagar post</button>
+                </form>
+                {% endif %}
+            </div>
         </article>
     </section>
 
     <section class="comments-section">
         <div class="comments-header">
             <span class="section-label">Comentarios</span>
-            <h2 class="comments-title">Conversa da publicacao</h2>
+            <h2 class="comments-title">Comentarios</h2>
         </div>
 
-        <div class="comments-grid">
-            {% for comment in comments_post %}
-            <article class="comment-card">
-                <div class="comment-header">
-                    <div>
-                        <div class="author">@{{ comment.author.username }}</div>
-                        {% if comment.author.username == request.user.username %}
-                        <span class="author-tag">Voce</span>
-                        {% endif %}
+        <div class="comments-layout">
+            <section class="comment-form-card">
+                <h3 class="comment-form-title">Novo comentario</h3>
+                <p class="comment-form-intro">Responda ao post.</p>
+
+                <form method="post" class="form-box comment-form">
+                    {% csrf_token %}
+
+                    <div class="field-group">
+                        <label for="comment_message">Comentario</label>
+                        <textarea id="comment_message" name="comment_message" rows="5" placeholder="Escreva seu comentario aqui..." required></textarea>
                     </div>
 
-                    <time class="date">{{ comment.created_at }}</time>
-                </div>
+                    <button type="submit">Comentar</button>
+                </form>
+            </section>
 
-                <p class="comment-message">{{ comment.message }}</p>
-            </article>
-            {% empty %}
-            <div class="empty-state">
-                Ainda nao existem comentarios por aqui. Seja o primeiro a comentar!
+            <div class="comments-grid">
+                {% for comment in comments_post %}
+                <article class="comment-card">
+                    <div class="comment-header">
+                        <div class="post-author-group">
+                            <a class="post-avatar-link" href="{% url 'view_profile' comment.author.username %}" aria-label="Perfil de {{ comment.author.username }}">
+                                {% if comment.author.perfil.profile_picture %}
+                                <img src="{{ comment.author.perfil.profile_picture.url }}" alt="Foto de perfil de {{ comment.author.username }}" class="post-avatar-image post-avatar-image-small">
+                                {% else %}
+                                <span class="post-avatar post-avatar-small">{{ comment.author.username|first|upper }}</span>
+                                {% endif %}
+                            </a>
+
+                            <div class="post-author-copy">
+                                <a class="author" href="{% url 'view_profile' comment.author.username %}">@{{ comment.author.username }}</a>
+                                <span class="post-meta">Comentario</span>
+                            </div>
+
+                            {% if comment.author.username == request.user.username %}
+                            <span class="author-tag">Voce</span>
+                            {% endif %}
+                        </div>
+                        <div class="comment-actions">
+                            <time class="date">{{ comment.created_at }}</time>
+                            {% if comment.author == request.user %}
+                            <form method="post" action="{% url 'delete_comment' id_post.id comment.id %}" class="comment-delete-form" onsubmit="return confirm('Tem certeza que deseja apagar este comentario?')">
+                                {% csrf_token %}
+                                <button type="submit" class="comment-delete-btn">Apagar</button>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <p class="comment-message">{{ comment.message }}</p>
+                </article>
+                {% empty %}
+                <div class="empty-state">
+                    Nenhum comentario por enquanto.
+                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
     </section>
 </main>

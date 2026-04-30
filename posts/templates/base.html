@@ -16,22 +16,23 @@
                 <img src="{% static 'posts/logo2.png' %}" alt="Logo do DevHub" class="global-logo">
                 <div class="global-brand-copy">
                     <span class="global-brand-name">DevHub</span>
-                    <span class="global-brand-tag">Comunidade para quem esta construindo</span>
+                    <span class="global-brand-tag">Posts, perfis e projetos</span>
                 </div>
             </a>
 
             <div class="global-nav-links">
-                <a href="/" class="global-link">Inicio</a>
                 {% if request.user.is_authenticated %}
-                <a href="/feed/create" class="btn">Criar post</a>
+                <a href="/" class="global-link">Inicio</a>
                 <a href="/feed" class="global-link">Feed</a>
+                <a href="{% url 'view_profile' request.user.username %}" class="global-link">Meu perfil</a>
+                <a href="/feed/create" class="btn">Novo post</a>
                 <a href="/logout" class="logout-btn">Sair</a>
-                <span class="global-brand-tag">Logado como: {{request.user}}</span>
+                <span class="global-user-chip">@{{ request.user.username }}</span>
                 {% else %}
+                <a href="/" class="global-link">Inicio</a>
                 <a href="/login" class="global-link">Login</a>
                 <a href="/register" class="btn-outline">Criar conta</a>
                 {% endif %}
-                
             </div>
         </nav>
     </header>
